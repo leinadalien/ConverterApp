@@ -8,7 +8,7 @@
 
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/grid_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
@@ -23,72 +23,81 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1" />
+
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             style="@style/Widget.Converter.NumButton"
-            android:text="2"/>
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="2" />
+
+        <Button
             style="@style/Widget.Converter.NumButton"
-            android:text="3"/>
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="3" />
+
+        <Button
             style="@style/Widget.Converter.NumButton"
-            android:text="4"/>
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="4" />
+
+        <Button
             style="@style/Widget.Converter.NumButton"
-            android:text="5"/>
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="5" />
+
+        <Button
             style="@style/Widget.Converter.NumButton"
-            android:text="6"/>
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="6" />
+
+        <Button
             style="@style/Widget.Converter.NumButton"
-            android:text="7"/>
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="7" />
+
+        <Button
             style="@style/Widget.Converter.NumButton"
-            android:text="8"/>
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="8" />
+
+        <Button
             style="@style/Widget.Converter.NumButton"
-            android:text="9"/>
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="9" />
+
+        <Button
             style="@style/Widget.Converter.NumButton"
-            android:text="0"/>
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="0" />
+
+        <Button
             style="@style/Widget.Converter.NumButton"
-            android:text="."/>
-        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="." />
+
+        <Button
             style="@style/Widget.Converter.FunButton"
-            android:text="d"
-            />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="d" />
     </androidx.gridlayout.widget.GridLayout>
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+    <androidx.fragment.app.FragmentContainerView
+        android:name="com.ldnprod.converter.DataFragment"
+        android:id="@+id/data_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/data_fragment" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
