@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.gridlayout.widget.GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/grid_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginBottom="20dp"
+    app:columnCount="3"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
+
+    <Button
+        style="@style/Widget.Converter.NumButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1" />
+
+    <Button
+        style="@style/Widget.Converter.NumButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2" />
+
+    <Button
+        style="@style/Widget.Converter.NumButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3" />
+
+    <Button
+        style="@style/Widget.Converter.NumButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4" />
+
+    <Button
+        style="@style/Widget.Converter.NumButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5" />
+
+    <Button
+        style="@style/Widget.Converter.NumButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6" />
+
+    <Button
+        style="@style/Widget.Converter.NumButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="7" />
+
+    <Button
+        style="@style/Widget.Converter.NumButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="8" />
+
+    <Button
+        style="@style/Widget.Converter.NumButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="9" />
+
+    <Button
+        style="@style/Widget.Converter.NumButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0" />
+
+    <Button
+        style="@style/Widget.Converter.NumButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="." />
+
+    <Button
+        style="@style/Widget.Converter.FunButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="d" />
+</androidx.gridlayout.widget.GridLayout>

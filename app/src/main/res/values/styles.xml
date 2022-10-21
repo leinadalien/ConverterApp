@@ -18,4 +18,7 @@
     <style name="Widget.Converter.FunButton" parent="Widget.Converter.NumButton">
         <item name="backgroundTint">@color/fun_button_background</item>
     </style>
+    <style name="EditText">
+        <item name="android:inputType">none</item>
+    </style>
 </resources>

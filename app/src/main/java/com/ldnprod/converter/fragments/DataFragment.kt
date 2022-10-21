@@ -1,16 +1,19 @@
-package com.ldnprod.converter
+package com.ldnprod.converter.fragments
 
-import android.app.Activity
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import java.util.zip.Inflater
+import com.ldnprod.converter.Category
+import com.ldnprod.converter.CategoryUnit
+import com.ldnprod.converter.R
 
 class DataFragment: Fragment(R.layout.data_fragment) {
 
@@ -45,6 +48,8 @@ class DataFragment: Fragment(R.layout.data_fragment) {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }
+        view.findViewById<EditText>(R.id.from_edit_text).inputType = InputType.TYPE_NULL
+        view.findViewById<EditText>(R.id.to_edit_text).inputType = InputType.TYPE_NULL
         return view
     }
     private fun categoriesInit(){
