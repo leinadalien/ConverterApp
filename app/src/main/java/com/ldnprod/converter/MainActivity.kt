@@ -9,14 +9,48 @@ import androidx.gridlayout.widget.GridLayout
 
 
 class MainActivity : AppCompatActivity() {
-    var spinnerData = arrayListOf("One", "Two", "Three")
-
+    var spinnerData = ArrayList<String>()
+    var categories = ArrayList<Category>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        categoriesInit()
         spinnerInit()
-        buttonsInit()
 
+    }
+    private fun categoriesInit(){
+        with(Category("weight")) {
+            addUnit(CategoryUnit("kg", 1.0))
+            addUnit(CategoryUnit("g", 1000.0))
+            addUnit(CategoryUnit("mg", 1000000.0))
+            addUnit(CategoryUnit("q", 0.01))
+            addUnit(CategoryUnit("t", 0.001))
+            addUnit(CategoryUnit("ct", 5000.0))
+            addUnit(CategoryUnit("lb", 2.2046226218488))
+            categories.add(this)
+            spinnerData.add(name)
+        }
+        with(Category("length")) {
+            addUnit(CategoryUnit("m", 1.0))
+            addUnit(CategoryUnit("km", 0.001))
+            addUnit(CategoryUnit("mile", 0.00062137119223734))
+            addUnit(CategoryUnit("in", 39.3701))
+            addUnit(CategoryUnit("ft", 3.28084))
+            addUnit(CategoryUnit("yard", 1.0936132983378))
+            categories.add(this)
+            spinnerData.add(name)
+        }
+        with(Category("volume")) {
+            addUnit(CategoryUnit("m3", 1.0))
+            addUnit(CategoryUnit("l", 1000.0))
+            addUnit(CategoryUnit("gal", 0.00062137119223734))
+            addUnit(CategoryUnit("oz", 33814.99999))
+            addUnit(CategoryUnit("pt", 2113.38))
+            addUnit(CategoryUnit("qt", 1056.69))
+            addUnit(CategoryUnit("gal", 264.172))
+            categories.add(this)
+            spinnerData.add(name)
+        }
     }
     private fun spinnerInit(){
         val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, spinnerData)
@@ -39,35 +73,5 @@ class MainActivity : AppCompatActivity() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }
-    }
-    private fun buttonsInit(){
-        val btnTexts = ArrayList<String>()
-        for (i in 1..9){
-            btnTexts.add(i.toString())
-        }
-        btnTexts.add("0")
-        btnTexts.add(".")
-        btnTexts.add("*")
-        val gridlayout:GridLayout = findViewById(R.id.grid_layout)
-        var button:Button
-        for (text in btnTexts){
-            button = layoutInflater.inflate(R.layout.num_button, gridlayout, false) as Button
-            button.text = text
-            gridlayout.addView(button)
-        }
-//        for (i in 1..9) {
-//            button = layoutInflater.inflate(R.layout.num_button, gridlayout, false) as Button
-//            button.text = i.toString()
-//            gridlayout.addView(button)
-//        }
-//        button = layoutInflater.inflate(R.layout.num_button, gridlayout, false) as Button
-//        button.text = "0"
-//        gridlayout.addView(button)
-//        button = layoutInflater.inflate(R.layout.num_button, gridlayout, false) as Button
-//        button.text = "."
-//        gridlayout.addView(button)
-//        button = layoutInflater.inflate(R.layout.num_button, gridlayout, false) as Button
-//        button.text = "*"
-//        gridlayout.addView(button)
     }
 }

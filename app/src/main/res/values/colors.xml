@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="num_button_background">#ff4287f5</color>
-    <color name="num_button_foreground">#ffffff</color>
+    <color name="fun_button_background">#fff5a442</color>
+    <color name="num_button_foreground">#ffffffff</color>
 </resources>
