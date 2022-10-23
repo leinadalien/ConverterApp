@@ -1,64 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.gridlayout.widget.GridLayout
+<!--<androidx.gridlayout.widget.GridLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:id="@+id/grid_layout"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    app:columnCount="3"-->
+<!--    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintStart_toStartOf="parent">-->
+
+<!--    <Button-->
+<!--        style="@style/Widget.Converter.NumButton"-->
+<!--        android:background="@drawable/button_top_left_bg"-->
+<!--        android:text="1" />-->
+
+<!--    <Button-->
+<!--        style="@style/Widget.Converter.NumButton"-->
+<!--        android:text="2" />-->
+
+<!--    <Button-->
+<!--        style="@style/Widget.Converter.NumButton"-->
+<!--        android:text="3" />-->
+
+<!--    <Button-->
+<!--        style="@style/Widget.Converter.NumButton"-->
+<!--        android:text="4" />-->
+
+<!--    <Button-->
+<!--        style="@style/Widget.Converter.NumButton"-->
+<!--        android:text="5" />-->
+
+<!--    <Button-->
+<!--        style="@style/Widget.Converter.NumButton"-->
+<!--        android:text="6" />-->
+
+<!--    <Button-->
+<!--        style="@style/Widget.Converter.NumButton"-->
+<!--        android:text="7" />-->
+
+<!--    <Button-->
+<!--        style="@style/Widget.Converter.NumButton"-->
+<!--        android:text="8" />-->
+
+<!--    <Button-->
+<!--        style="@style/Widget.Converter.NumButton"-->
+<!--        android:text="9" />-->
+
+<!--    <Button-->
+<!--        style="@style/Widget.Converter.NumButton"-->
+<!--        android:text="0" />-->
+
+<!--    <Button-->
+<!--        style="@style/Widget.Converter.NumButton"-->
+<!--        android:text="." />-->
+
+<!--    <ImageButton-->
+<!--        style="@style/Widget.Converter.FunButton"-->
+<!--        app:srcCompat="@android:drawable/ic_input_delete"-->
+<!--        />-->
+
+<!--</androidx.gridlayout.widget.GridLayout>-->
+<androidx.recyclerview.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/grid_layout"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:columnCount="3"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent">
-
-    <Button
-        style="@style/Widget.Converter.NumButton"
-        android:background="@drawable/button_top_left_bg"
-        android:text="1" />
-
-    <Button
-        style="@style/Widget.Converter.NumButton"
-        android:text="2" />
-
-    <Button
-        style="@style/Widget.Converter.NumButton"
-        android:text="3" />
-
-    <Button
-        style="@style/Widget.Converter.NumButton"
-        android:text="4" />
-
-    <Button
-        style="@style/Widget.Converter.NumButton"
-        android:text="5" />
-
-    <Button
-        style="@style/Widget.Converter.NumButton"
-        android:text="6" />
-
-    <Button
-        style="@style/Widget.Converter.NumButton"
-        android:text="7" />
-
-    <Button
-        style="@style/Widget.Converter.NumButton"
-        android:text="8" />
-
-    <Button
-        style="@style/Widget.Converter.NumButton"
-        android:text="9" />
-
-    <Button
-        style="@style/Widget.Converter.NumButton"
-        android:text="0" />
-
-    <Button
-        style="@style/Widget.Converter.NumButton"
-        android:text="." />
-
-    <ImageButton
-        style="@style/Widget.Converter.FunButton"
-        app:srcCompat="@android:drawable/ic_input_delete"
-        />
-
-
-</androidx.gridlayout.widget.GridLayout>
+    app:layout_constraintStart_toStartOf="parent"
+    android:id="@+id/recycler_view"
+    tools:listitem="@layout/numpad_button"
+    tools:itemCount="12"
+    app:spanCount="3"
+    android:clipToPadding="false"
+    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+    />
