@@ -1,7 +1,9 @@
 package com.ldnprod.converter
 
+import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,23 +24,21 @@ class ButtonAdapter: RecyclerView.Adapter<ButtonAdapter.ButtonHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ButtonHolder {
         val layout = LayoutInflater.from(parent.context)
             .inflate(R.layout.numpad_button, parent, false)
-
+        
         return ButtonHolder(layout)
     }
 
     override fun onBindViewHolder(holder: ButtonHolder, position: Int) {
-            val item = buttons.get(position)
-            with(holder.button){
-                if (position == 0) {
-                    var bg = GradientDrawable()
-                    bg.cornerRadii = floatArrayOf(5.0f,10.0f,10.0f,10.0f)
-                    background = bg
+        val item = buttons.get(position)
+        if (position == 0) {
 
-                }
-                holder.button.text = item.toString()
-                setOnClickListener {
-                    Toast.makeText(context, "clicked$item", Toast.LENGTH_SHORT).show()
-                }
+        }
+        with(holder.button){
+
+            holder.button.text = item.toString()
+            setOnClickListener {
+                Toast.makeText(context, "clicked$item", Toast.LENGTH_SHORT).show()
             }
+        }
     }
 }

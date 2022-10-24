@@ -4,7 +4,7 @@
         <item name="android:textSize">40sp</item>
         <item name="android:minHeight">80dp</item>
         <item name="android:minWidth">80dp</item>
-        <item name="android:background">@drawable/button_bg</item>
+        <item name="android:background">@drawable/numpad_button</item>
         <item name="android:textColor">@color/num_button_foreground</item>
         <item name="backgroundTint">@color/num_button_background</item>
         <item name="layout_gravity">fill</item>

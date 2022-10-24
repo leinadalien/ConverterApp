@@ -2,10 +2,10 @@
 <Button xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
+    app:position="?attr/position"
     style="@style/Widget.Converter.NumButton"
     android:id="@+id/numpad_button"
-    android:background="@drawable/button_bg"
+    android:background="@drawable/numpad_button"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_columnWeight="1"
