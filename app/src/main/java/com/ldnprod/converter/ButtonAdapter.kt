@@ -15,8 +15,8 @@ class ButtonAdapter: RecyclerView.Adapter<ButtonAdapter.ButtonHolder>() {
 
     private val buttons = ('1').rangeTo('9').toList() + '0' + '.' + 'x'
 
-    class ButtonHolder(val view:View): RecyclerView.ViewHolder(view) {
-        val button = view.findViewById<Button>(R.id.numpad_button)
+    class ButtonHolder(view:View): RecyclerView.ViewHolder(view) {
+        val button = view.findViewById<NumpadButton>(R.id.numpad_button)
     }
 
     override fun getItemCount() = buttons.size
@@ -24,20 +24,19 @@ class ButtonAdapter: RecyclerView.Adapter<ButtonAdapter.ButtonHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ButtonHolder {
         val layout = LayoutInflater.from(parent.context)
             .inflate(R.layout.numpad_button, parent, false)
-        
+
         return ButtonHolder(layout)
     }
 
     override fun onBindViewHolder(holder: ButtonHolder, position: Int) {
-        val item = buttons.get(position)
-        if (position == 0) {
-
-        }
+        val item = buttons[position]
         with(holder.button){
-
+            if (position == 0) {
+                container_position = NumpadButton.ContainerPosition.BOTTOM_LEFT
+            }
             holder.button.text = item.toString()
             setOnClickListener {
-                Toast.makeText(context, "clicked$item", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "clicked $item", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
-        app:position="top_left">
+        app:top_left="true">
         <shape
             android:shape="rectangle">
             <solid android:color="@color/black"/>
@@ -11,7 +10,7 @@
         </shape>
     </item>
     <item
-        app:position="top_right">
+        app:top_right="true">
         <shape
             android:shape="rectangle">
             <solid android:color="@color/black"/>
@@ -19,7 +18,7 @@
         </shape>
     </item>
     <item
-        app:position="bottom_left">
+        app:bottom_left="true">
         <shape
             android:shape="rectangle">
             <solid android:color="@color/black"/>
@@ -27,11 +26,11 @@
         </shape>
     </item>
     <item
-        app:position="bottom_right">
+        app:bottom_right="true">
         <shape
             android:shape="rectangle">
             <solid android:color="@color/black"/>
-            <corners android:radius="10dp" android:bottomRightRadius="50dp"/>
+            <corners android:radius="10dp" android:bottomLeftRadius="50dp"/>
         </shape>
     </item>
     <item>
