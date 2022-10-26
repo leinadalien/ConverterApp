@@ -17,7 +17,11 @@ class NumpadFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.numpad_fragment, container, false) as RecyclerView
-        view.layoutManager = GridLayoutManager(context, 3)
+        view.layoutManager = object: GridLayoutManager(context, 3){
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
+        }
         view.adapter = ButtonAdapter()
         return view
     }

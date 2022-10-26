@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ldnprod.converter.FunctionButton xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Converter.FunButton"
+    android:id="@+id/numpad_button"
+    android:background="@drawable/numpad_button"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:src="@android:drawable/ic_input_delete"
+    app:layout_columnWeight="1"
+    />

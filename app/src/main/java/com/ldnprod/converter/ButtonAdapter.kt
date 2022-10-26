@@ -1,43 +1,76 @@
 package com.ldnprod.converter
 
-import android.content.res.Resources
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
-class ButtonAdapter: RecyclerView.Adapter<ButtonAdapter.ButtonHolder>() {
-
+class ButtonAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    companion object {
+        const val INPUT_BUTTON_TYPE = 1
+        const val FUN_BUTTON_TYPE = 2
+    }
     private val buttons = ('1').rangeTo('9').toList() + '0' + '.' + 'x'
 
-    class ButtonHolder(view:View): RecyclerView.ViewHolder(view) {
-        val button = view.findViewById<NumpadButton>(R.id.numpad_button)
+    class InputButtonHolder(view:View): RecyclerView.ViewHolder(view) {
+        val button: InputButton = view.findViewById(R.id.numpad_button)
+    }
+    class FunButtonHolder(view:View): RecyclerView.ViewHolder(view) {
+        val button: FunctionButton = view.findViewById(R.id.numpad_button)
     }
 
     override fun getItemCount() = buttons.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ButtonHolder {
-        val layout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.numpad_button, parent, false)
-
-        return ButtonHolder(layout)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        if (viewType == FUN_BUTTON_TYPE){
+            val layout = LayoutInflater.from(parent.context)
+                .inflate(R.layout.function_button, parent, false)
+            return FunButtonHolder(layout)
+        } else {
+            val layout = LayoutInflater.from(parent.context)
+                .inflate(R.layout.input_button, parent, false)
+            return InputButtonHolder(layout)
+        }
     }
 
-    override fun onBindViewHolder(holder: ButtonHolder, position: Int) {
+    override fun getItemViewType(position: Int): Int {
+        if (position == itemCount - 1) {
+            return FUN_BUTTON_TYPE
+        }
+        return INPUT_BUTTON_TYPE
+    }
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = buttons[position]
-        with(holder.button){
-            if (position == 0) {
-                container_position = NumpadButton.ContainerPosition.BOTTOM_LEFT
+        when(holder.itemViewType){
+            INPUT_BUTTON_TYPE -> {
+                with((holder as InputButtonHolder).button) {
+                    containerPosition = when(position){
+                        0 -> ContainerPositions.TOP_LEFT
+                        2 -> ContainerPositions.TOP_RIGHT
+                        itemCount - 1 -> ContainerPositions.BOTTOM_RIGHT
+                        itemCount - 3 -> ContainerPositions.BOTTOM_LEFT
+                        else -> ContainerPositions.DEFAULT
+                    }
+                    text = item.toString()
+                    setOnClickListener {
+                        Toast.makeText(context, "clicked $item", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
-            holder.button.text = item.toString()
-            setOnClickListener {
-                Toast.makeText(context, "clicked $item", Toast.LENGTH_SHORT).show()
+            else -> {
+                with((holder as FunButtonHolder).button){
+                    containerPosition = when(position){
+                        0 -> ContainerPositions.TOP_LEFT
+                        2 -> ContainerPositions.TOP_RIGHT
+                        itemCount - 1 -> ContainerPositions.BOTTOM_RIGHT
+                        itemCount - 3 -> ContainerPositions.BOTTOM_LEFT
+                        else -> ContainerPositions.DEFAULT
+                    }
+                }
             }
         }
+
     }
 }

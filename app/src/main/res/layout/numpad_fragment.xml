@@ -71,7 +71,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     android:id="@+id/recycler_view"
-    tools:listitem="@layout/numpad_button"
+    tools:listitem="@layout/input_button"
     tools:itemCount="12"
     app:spanCount="3"
     android:clipToPadding="false"
