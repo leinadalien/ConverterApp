@@ -2,6 +2,7 @@ package com.ldnprod.converter.fragments
 
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,12 +17,13 @@ import com.ldnprod.converter.CategoryUnit
 import com.ldnprod.converter.R
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
+import kotlin.math.log
 
 class DataFragment: Fragment(R.layout.data_fragment) {
 
-    var spinnerData = ArrayList<String>()
-    var categories = ArrayList<Category>()
-
+    private var spinnerData = ArrayList<String>()
+    private var categories = ArrayList<Category>()
+    private val LOG_TAG = "DataFragment"
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,11 +42,7 @@ class DataFragment: Fragment(R.layout.data_fragment) {
                     parent: AdapterView<*>?,
                     itemSelected: View, selectedItemPosition: Int, selectedId: Long
                 ) {
-                    val toast = Toast.makeText(
-                        context,
-                        "Selected", Toast.LENGTH_SHORT
-                    )
-                    toast.show()
+                    Log.i(LOG_TAG, "selected $selectedItem")
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}

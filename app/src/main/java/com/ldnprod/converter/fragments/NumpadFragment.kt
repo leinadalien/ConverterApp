@@ -11,6 +11,7 @@ import com.ldnprod.converter.ButtonAdapter
 import com.ldnprod.converter.R
 
 class NumpadFragment: Fragment() {
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

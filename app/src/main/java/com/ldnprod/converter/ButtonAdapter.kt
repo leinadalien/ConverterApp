@@ -1,5 +1,6 @@
 package com.ldnprod.converter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ class ButtonAdapter(private val stream: InputStream): RecyclerView.Adapter<Recyc
         const val INPUT_BUTTON_TYPE = 1
         const val FUN_BUTTON_TYPE = 2
     }
-    //private val buttons = ('1').rangeTo('9').toList() + '0' + '.' + 'x'
+    private val LOG_TAG = "ButtonAdapter"
     private val buttons = ArrayList<Pair<String, String>>()
     class InputButtonHolder(view:View): RecyclerView.ViewHolder(view) {
         val button: InputButton = view.findViewById(R.id.numpad_button)
@@ -84,8 +85,9 @@ class ButtonAdapter(private val stream: InputStream): RecyclerView.Adapter<Recyc
                     }
                     text = item.second
                     setOnClickListener {
-                        Toast.makeText(context, "clicked ${item.second}", Toast.LENGTH_SHORT).show()
+                        Log.i(LOG_TAG, "input ${item.second}")
                     }
+
                 }
             }
             else -> {
@@ -99,6 +101,9 @@ class ButtonAdapter(private val stream: InputStream): RecyclerView.Adapter<Recyc
                     }
                     when(item.second){
                         "delete" -> setImageResource(android.R.drawable.ic_input_delete)
+                    }
+                    setOnClickListener {
+                        Log.i(LOG_TAG, "clicked ${item.second}")
                     }
                 }
             }
