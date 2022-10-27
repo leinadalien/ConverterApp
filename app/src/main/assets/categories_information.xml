@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <categories>
-    <category>
-        <name>Weight</name>
+    <category name="weight">
         <unit>
             <measurement>kg</measurement>
             <factor>1.0</factor>
@@ -31,8 +30,7 @@
             <factor>2.2046226218488</factor>
         </unit>
     </category>
-    <category>
-        <name>Length</name>
+    <category name ="length">
         <unit>
             <measurement>m</measurement>
             <factor>1.0</factor>
@@ -62,8 +60,7 @@
             <factor>1.0936132983378</factor>
         </unit>
     </category>
-    <category>
-        <name>Volume</name>
+    <category name="volume">
         <unit>
             <measurement>m3</measurement>
             <factor>1.0</factor>

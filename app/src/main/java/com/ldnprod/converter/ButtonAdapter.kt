@@ -30,10 +30,10 @@ class ButtonAdapter(private val stream: InputStream): RecyclerView.Adapter<Recyc
         parser.setInput(stream, null)
         var buttonType: String? = null
         var buttonContent: String? = null
-        var evenType = parser.eventType
-        while(evenType != XmlPullParser.END_DOCUMENT){
+        var eventType = parser.eventType
+        while(eventType != XmlPullParser.END_DOCUMENT){
             val tagName = parser.name
-            when(evenType) {
+            when(eventType) {
                 XmlPullParser.START_TAG -> {
                     if (tagName.equals("button", true)) {
                         buttonType = parser.getAttributeValue(null, "type")
@@ -46,7 +46,7 @@ class ButtonAdapter(private val stream: InputStream): RecyclerView.Adapter<Recyc
                     }
                 }
             }
-            evenType = parser.next()
+            eventType = parser.next()
         }
     }
     override fun getItemCount() = buttons.size

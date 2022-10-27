@@ -1,6 +1,6 @@
 package com.ldnprod.converter
 
-class Category(public var name:String) {
+class Category(public val name:String) {
 
     var units = HashSet<CategoryUnit>()
     public fun addUnit(unit: CategoryUnit) {

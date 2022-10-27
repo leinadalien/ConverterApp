@@ -1,6 +1,6 @@
 package com.ldnprod.converter
 
 class CategoryUnit(
-    val measurement:String,
+    var measurement:String,
     val factor:Double
     )

@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment
 import com.ldnprod.converter.Category
 import com.ldnprod.converter.CategoryUnit
 import com.ldnprod.converter.R
+import org.xmlpull.v1.XmlPullParser
+import org.xmlpull.v1.XmlPullParserFactory
 
 class DataFragment: Fragment(R.layout.data_fragment) {
 
@@ -26,7 +28,7 @@ class DataFragment: Fragment(R.layout.data_fragment) {
         savedInstanceState: Bundle?
     ): View? {
         categoriesInit()
-        var view = inflater.inflate(R.layout.data_fragment, null)
+        val view = inflater.inflate(R.layout.data_fragment, null)
         val spinnerAdapter =
             ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, spinnerData)
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -53,36 +55,41 @@ class DataFragment: Fragment(R.layout.data_fragment) {
         return view
     }
     private fun categoriesInit(){
-        with(Category("weight")) {
-            addUnit(CategoryUnit("kg", 1.0))
-            addUnit(CategoryUnit("g", 1000.0))
-            addUnit(CategoryUnit("mg", 1000000.0))
-            addUnit(CategoryUnit("q", 0.01))
-            addUnit(CategoryUnit("t", 0.001))
-            addUnit(CategoryUnit("ct", 5000.0))
-            addUnit(CategoryUnit("lb", 2.2046226218488))
-            categories.add(this)
-            spinnerData.add(name)
-        }
-        with(Category("length")) {
-            addUnit(CategoryUnit("m", 1.0))
-            addUnit(CategoryUnit("km", 0.001))
-            addUnit(CategoryUnit("mile", 0.00062137119223734))
-            addUnit(CategoryUnit("in", 39.3701))
-            addUnit(CategoryUnit("ft", 3.28084))
-            addUnit(CategoryUnit("yard", 1.0936132983378))
-            categories.add(this)
-            spinnerData.add(name)
-        }
-        with(Category("volume")) {
-            addUnit(CategoryUnit("m3", 1.0))
-            addUnit(CategoryUnit("l", 1000.0))
-            addUnit(CategoryUnit("oz", 33814.99999))
-            addUnit(CategoryUnit("pt", 2113.38))
-            addUnit(CategoryUnit("qt", 1056.69))
-            addUnit(CategoryUnit("gal", 264.172))
-            categories.add(this)
-            spinnerData.add(name)
+        val parser: XmlPullParser = XmlPullParserFactory.newInstance().newPullParser()
+        parser.setInput(activity?.resources?.assets?.open("categories_information.xml"), null)
+        var category: Category? = null
+        var unitMeasurement: String? = null
+        var unitFactor: Double? = null
+        var content: String? = null
+        var eventType = parser.eventType
+        while (eventType != XmlPullParser.END_DOCUMENT){
+            val tagName = parser.name
+            when(eventType) {
+                XmlPullParser.START_TAG -> {
+                    if (tagName.equals("category", true)) {
+                        val categoryName = parser.getAttributeValue(null, "name")
+                        category = Category(categoryName)
+                        spinnerData.add(categoryName)
+                    }
+                }
+                XmlPullParser.TEXT -> content = parser.text
+                XmlPullParser.END_TAG -> {
+
+                    if (tagName.equals("measurement",true)) {
+                        unitMeasurement = content
+                    }
+                    if (tagName.equals("factor",true)) {
+                        unitFactor = content?.toDouble()
+                    }
+                    if (tagName.equals("unit",true)) {
+                        category?.addUnit(CategoryUnit(unitMeasurement!!,unitFactor!!))
+                    }
+                    if (tagName.equals("category",true)) {
+                        categories.add(category!!)
+                    }
+                }
+            }
+            eventType = parser.next()
         }
     }
 
