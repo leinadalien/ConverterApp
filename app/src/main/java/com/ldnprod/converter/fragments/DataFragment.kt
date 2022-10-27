@@ -77,7 +77,6 @@ class DataFragment: Fragment(R.layout.data_fragment) {
         with(Category("volume")) {
             addUnit(CategoryUnit("m3", 1.0))
             addUnit(CategoryUnit("l", 1000.0))
-            addUnit(CategoryUnit("gal", 0.00062137119223734))
             addUnit(CategoryUnit("oz", 33814.99999))
             addUnit(CategoryUnit("pt", 2113.38))
             addUnit(CategoryUnit("qt", 1056.69))

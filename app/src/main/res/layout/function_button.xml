@@ -7,6 +7,5 @@
     android:background="@drawable/numpad_button"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:src="@android:drawable/ic_input_delete"
     app:layout_columnWeight="1"
     />

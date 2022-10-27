@@ -22,7 +22,7 @@ class NumpadFragment: Fragment() {
                 return false
             }
         }
-        view.adapter = ButtonAdapter()
+        view.adapter = activity?.assets?.let { ButtonAdapter(it.open("numpad.xml")) }
         return view
     }
 }

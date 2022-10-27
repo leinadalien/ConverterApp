@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Buttons>
+    <button type="input">1</button>
+    <button type="input">2</button>
+    <button type="input">3</button>
+    <button type="input">4</button>
+    <button type="input">5</button>
+    <button type="input">6</button>
+    <button type="input">7</button>
+    <button type="input">8</button>
+    <button type="input">9</button>
+    <button type="input">0</button>
+    <button type="input">.</button>
+    <button type="function">delete</button>
+</Buttons>
