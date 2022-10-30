@@ -10,7 +10,7 @@ import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.InputStream
 
-class ButtonAdapter(private val stream: InputStream): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ButtonAdapter(private val stream: InputStream, private val dataViewModel: DataViewModel): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val INPUT_BUTTON_TYPE = 1
         const val FUN_BUTTON_TYPE = 2
@@ -85,6 +85,7 @@ class ButtonAdapter(private val stream: InputStream): RecyclerView.Adapter<Recyc
                     }
                     text = item.second
                     setOnClickListener {
+                        dataViewModel.textTo.value = item.second
                         Log.i(LOG_TAG, "input ${item.second}")
                     }
 
@@ -108,6 +109,5 @@ class ButtonAdapter(private val stream: InputStream): RecyclerView.Adapter<Recyc
                 }
             }
         }
-
     }
 }

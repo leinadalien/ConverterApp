@@ -2,6 +2,14 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        app:top_left="true" android:state_enabled="true" android:state_pressed="true">
+        <shape
+            android:shape="rectangle">
+            <stroke android:width="10dp" android:color="@color/black"/>
+            <corners android:radius="10dp" android:topLeftRadius="50dp"/>
+        </shape>
+    </item>
+    <item
         app:top_left="true">
         <shape
             android:shape="rectangle">

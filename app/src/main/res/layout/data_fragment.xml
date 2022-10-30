@@ -9,10 +9,11 @@
 
     <Spinner
         android:id="@+id/spinner"
+        style="@style/Widget.Converter.Spinner"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="60dp"
         android:layout_margin="5dp"
-
+        android:background="@drawable/category_spinner_bg"
         android:contentDescription="@string/category_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,24 +25,17 @@
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
         android:autofillHints="20"
+        android:background="@drawable/edittext_bg"
         android:ems="10"
         android:hint="@string/from_edit_text_hint"
         android:inputType="numberDecimal"
         android:labelFor="@id/from_edit_text"
+        android:padding="20dp"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toStartOf="@+id/from_spinner"
         app:layout_constraintStart_toStartOf="@+id/spinner"
-        app:layout_constraintTop_toBottomOf="@+id/spinner"
-        android:background="@drawable/edittext_bg"/>
-    <Spinner
-        android:id="@+id/from_spinner"
-        android:layout_width="60dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/from_edit_text"
-        app:layout_constraintEnd_toEndOf="@+id/spinner"
-        app:layout_constraintStart_toEndOf="@+id/from_edit_text"
-        app:layout_constraintTop_toTopOf="@+id/from_edit_text"
-        android:background="@drawable/unit_spinner_bg" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
 
     <EditText
         android:id="@+id/to_edit_text"
@@ -54,20 +48,34 @@
         android:hint="@string/to_edit_text_hint"
         android:inputType="numberDecimal"
         android:labelFor="@id/from_edit_text"
+        android:padding="20dp"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toStartOf="@+id/to_spinner"
         app:layout_constraintStart_toStartOf="@+id/spinner"
         app:layout_constraintTop_toBottomOf="@+id/from_edit_text" />
 
+
+    <Spinner
+        android:id="@+id/from_spinner"
+        style="@style/Widget.Converter.Spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@drawable/unit_spinner_bg"
+        android:minWidth="60dp"
+        app:layout_constraintBottom_toBottomOf="@+id/from_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/from_edit_text" />
+
     <Spinner
         android:id="@+id/to_spinner"
-        android:layout_width="60dp"
+        style="@style/Widget.Converter.Spinner"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:background="@drawable/unit_spinner_bg"
+        android:minWidth="60dp"
         app:layout_constraintBottom_toBottomOf="@+id/to_edit_text"
-        app:layout_constraintEnd_toEndOf="@+id/spinner"
-        app:layout_constraintStart_toEndOf="@+id/to_edit_text"
-        app:layout_constraintTop_toTopOf="@+id/to_edit_text"
-        android:background="@drawable/unit_spinner_bg" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/to_edit_text" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
