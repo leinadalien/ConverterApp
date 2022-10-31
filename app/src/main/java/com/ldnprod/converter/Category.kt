@@ -13,6 +13,7 @@ class Category(val name:String) {
     }
     fun convert(fromUnit: CategoryUnit, toUnit: CategoryUnit, value: BigDecimal): BigDecimal {
         if (units.contains(fromUnit) && units.contains(toUnit)){
+            if (fromUnit.factor == toUnit.factor) return value
             return value/(fromUnit.factor).toBigDecimal() * (toUnit.factor).toBigDecimal()
         }
         else {

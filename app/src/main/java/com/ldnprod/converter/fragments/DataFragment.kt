@@ -3,14 +3,12 @@ package com.ldnprod.converter.fragments
 import android.annotation.SuppressLint
 import  android.os.Bundle
 import android.util.Log
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
@@ -38,7 +36,10 @@ class DataFragment: Fragment(R.layout.data_fragment) {
     private var unFocusedEditText: EditText? = null
     private var fromUnit: CategoryUnit? = null
     private var toUnit: CategoryUnit? = null
-    private val maxLength = 10
+    private val maxLength = 16
+    private lateinit var maxToast:Toast
+    private lateinit var dotToast:Toast
+    private lateinit var invalidPasteToast:Toast
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -105,7 +106,10 @@ class DataFragment: Fragment(R.layout.data_fragment) {
         focusedEditText?.let {
             var start = it.selectionStart
             var end = it.selectionEnd
-            if (it.text.length >= maxLength && it.text[it.text.length - 1] != '.' && start == end) return
+            if (it.text.length >= maxLength && it.text[it.text.length - 1] != '.' && start == end) {
+                maxToast.show()
+                return
+            }
             try {
                 input.toDouble()
                 var allIsGood = true
@@ -115,10 +119,10 @@ class DataFragment: Fragment(R.layout.data_fragment) {
                     if (start == 0 && end != it.text.length && it.text.subSequence(start, end).contains('.')) allIsGood = false
                     if (start == 1 && it.text[0] == '0') allIsGood = false
                 } else {
-                    if (start == 0 && it.text[end - 1] == '0' && !it.text.subSequence(start, end - 1).contains('.')) allIsGood = false
+                    if (start == 1 && it.text[0] == '0') allIsGood = false
                 }
                 if (allIsGood) it.text.replace(start, end, input)
-
+                it.setSelection(it.selectionEnd)
             } catch (e: NumberFormatException) {
                 if (input.equals(".")){
                     if (!it.text.subSequence(0, start).contains(input) &&
@@ -127,9 +131,10 @@ class DataFragment: Fragment(R.layout.data_fragment) {
                             it.text.replace(start, end, "0 + $input")
                         } else it.text.replace(start, end, input)
                         dataViewModel.blockedButtons.value?.add(Pair("input","."))
-                    }
+                    } else dotToast.show()
                 }
             }
+            it.setSelection(it.selectionStart)
             convert()
         }
     }
@@ -145,9 +150,13 @@ class DataFragment: Fragment(R.layout.data_fragment) {
                     if (end == start && start > 0) {
                         start -= 1
                     }
+
+                    var l = it.text.length
                     it.text.delete(start, end)
+                    l = it.text.length
                 }
                 convert()
+
             }
         }
         savedInstanceState?.let {
@@ -165,6 +174,9 @@ class DataFragment: Fragment(R.layout.data_fragment) {
                 binding.toEditText.setText(getString("to_edittext"))
             }
         }
+        maxToast = Toast.makeText(requireActivity(), "Reached maximum", Toast.LENGTH_SHORT)
+        dotToast = Toast.makeText(requireActivity(), "Dot already exists", Toast.LENGTH_SHORT)
+        invalidPasteToast = Toast.makeText(requireActivity(), "Invalid data", Toast.LENGTH_SHORT)
         binding.swapButton.setOnClickListener { swapUnits() }
         binding.fromEditText.requestFocus()
     }
@@ -243,13 +255,24 @@ class DataFragment: Fragment(R.layout.data_fragment) {
     }
     private fun swapUnits(){
         val toText = binding.toEditText.text.toString()
+        val fromText = binding.fromEditText.text.toString()
         val fromId = binding.fromSpinner.selectedItemPosition
         binding.fromSpinner.setSelection(binding.toSpinner.selectedItemPosition)
         binding.toSpinner.setSelection(fromId)
-        binding.fromEditText.setText(toText)
+        binding.fromEditText.setText((toText))
+        binding.toEditText.setText((fromText))
         binding.fromEditText.requestFocus()
-        convert()
     }
+//    private fun cutZiros(text: String): String{
+//        var txt = text
+//        while (txt.isNotEmpty() && txt[txt.length - 1] == '0'){
+//            txt = txt.substring(0, txt.length - 1)
+//        }
+//        if (txt[txt.length - 1] == '.') {
+//            txt = txt.substring(0, txt.length - 1)
+//        }
+//        return txt
+//    }
     private fun updateUnits() {
         if (focusedEditText == binding.fromEditText) {
             fromUnit = firstUnit
@@ -260,6 +283,12 @@ class DataFragment: Fragment(R.layout.data_fragment) {
         }
     }
 
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+    }
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         with(outState) {
