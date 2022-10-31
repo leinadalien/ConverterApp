@@ -1,5 +1,6 @@
 package com.ldnprod.converter.fragments
 
+import android.annotation.SuppressLint
 import  android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -32,6 +33,10 @@ class DataFragment: Fragment(R.layout.data_fragment) {
     private lateinit var firstUnit: CategoryUnit
     private  lateinit var secondUnit: CategoryUnit
     private var focusedEditText: EditText? = null
+    private var unFocusedEditText: EditText? = null
+    private var fromUnit: CategoryUnit? = null
+    private var toUnit: CategoryUnit? = null
+    private val maxLength = 10
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,33 +68,39 @@ class DataFragment: Fragment(R.layout.data_fragment) {
         }
 
         binding.fromEditText.showSoftInputOnFocus = false
-        binding.fromEditText.onFocusChangeListener =
-            OnFocusChangeListener { v, hasFocus -> focusedEditText = if (hasFocus) binding.fromEditText else null}
-        binding.toEditText.onFocusChangeListener =
-            OnFocusChangeListener { v, hasFocus -> focusedEditText = if (hasFocus) binding.toEditText else null}
         binding.toEditText.showSoftInputOnFocus = false
+        binding.fromEditText.onFocusChangeListener = OnFocusChangeListener { v, hasFocus -> focusChange(v, hasFocus)}
+        binding.toEditText.onFocusChangeListener = OnFocusChangeListener { v, hasFocus -> focusChange(v, hasFocus)}
         focusedEditText = binding.fromEditText
+        unFocusedEditText = binding.toEditText
         return binding.root
     }
-    private fun updateConverting(fromEditText: EditText = , toEditText: EditText,
-                                   fromUnit: CategoryUnit = firstUnit,
-                                   toUnit: CategoryUnit = secondUnit, data: String) {
-        fromEditText.setText(data)
-        if (fromEditText.text.isNotEmpty()) {
-            toEditText.setText(
-                DecimalFormat("#.####").format(
-                    currentCategory.convertTo(
-                        fromUnit,
-                        toUnit,
-                        data.toDouble())
-                ).toString()
-            )
-        } else toEditText.setText("")
+    private fun focusChange(view: View, hasFocus: Boolean) {
+        if (hasFocus) {
+            focusedEditText = view as EditText
+            if (focusedEditText == binding.fromEditText) {
+                unFocusedEditText = binding.toEditText
+            }
+            else {
+                unFocusedEditText = binding.fromEditText
+            }
+            updateUnits()
+        }
+    }
+    private fun convert() {
+        try{
+            var fromValue = focusedEditText!!.text.toString().toBigDecimal()
+            var toValue = currentCategory.convert(fromUnit!!, toUnit!!, fromValue)
+            unFocusedEditText!!.setText(DecimalFormat("#.##########").format(toValue))
+        } catch (e: NumberFormatException) {
+            unFocusedEditText!!.setText("")
+        }
     }
     private fun getInput(input: String){
         focusedEditText?.let {
             var start = it.selectionStart
             var end = it.selectionEnd
+            if (it.text.length >= maxLength && it.text[it.text.length - 1] != '.' && start == end) return
             try {
                 input.toDouble()
                 var allIsGood = true
@@ -100,6 +111,7 @@ class DataFragment: Fragment(R.layout.data_fragment) {
                     if (start == 1 && it.text[0] == '0') allIsGood = false
                 }
                 if (allIsGood) it.text.replace(start, end, input)
+
             } catch (e: NumberFormatException) {
                 if (input.equals(".")){
                     if (!it.text.subSequence(0, start).contains(input) &&
@@ -111,6 +123,7 @@ class DataFragment: Fragment(R.layout.data_fragment) {
                     }
                 }
             }
+            convert()
         }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -127,6 +140,7 @@ class DataFragment: Fragment(R.layout.data_fragment) {
                     }
                     it.text.delete(start, end)
                 }
+                convert()
             }
         }
         binding.fromEditText.requestFocus()
@@ -191,6 +205,8 @@ class DataFragment: Fragment(R.layout.data_fragment) {
                         R.id.from_spinner -> firstUnit = currentCategory.units[selectedItemPosition]
                         R.id.to_spinner -> secondUnit = currentCategory.units[selectedItemPosition]
                     }
+                    updateUnits()
+                    convert()
                     Log.i(LOG_TAG, "${spinner.id} selected $selectedItem")
                 }
 
@@ -198,5 +214,13 @@ class DataFragment: Fragment(R.layout.data_fragment) {
             }
         }
     }
-
+    private fun updateUnits() {
+        if (focusedEditText == binding.fromEditText) {
+            fromUnit = firstUnit
+            toUnit = secondUnit
+        } else {
+            fromUnit = secondUnit
+            toUnit = firstUnit
+        }
+    }
 }

@@ -91,10 +91,6 @@ class ButtonAdapter(private val stream: InputStream, private val dataViewModel: 
                         dataViewModel.passingInput.value = item.second
                         Log.i(LOG_TAG, "input ${item.second}")
                     }
-                    dataViewModel.blockedButtons.observe(lifecycleOwner) {
-                        buttons.contains(Pair("input", item.second))
-                        isEnabled = false
-                    }
                 }
             }
             else -> {
@@ -112,10 +108,6 @@ class ButtonAdapter(private val stream: InputStream, private val dataViewModel: 
                     setOnClickListener {
                         dataViewModel.passingFunction.value = item.second
                         Log.i(LOG_TAG, "clicked ${item.second}")
-                    }
-                    dataViewModel.blockedButtons.observe(lifecycleOwner) {
-                        buttons.contains(Pair("function", item.second))
-                        isEnabled = false
                     }
                 }
             }
