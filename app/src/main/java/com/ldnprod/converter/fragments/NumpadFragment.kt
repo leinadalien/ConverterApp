@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ldnprod.converter.ButtonAdapter
@@ -25,7 +26,7 @@ class NumpadFragment: Fragment(R.layout.numpad_fragment) {
                 return false
             }
         }
-        view.adapter = activity?.assets?.let { ButtonAdapter(it.open("numpad.xml"), dataViewModel) }
+        view.adapter = activity?.assets?.let { ButtonAdapter(it.open("numpad.xml"), dataViewModel, activity as LifecycleOwner) }
         return view
     }
 }

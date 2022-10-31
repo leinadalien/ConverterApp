@@ -2,7 +2,7 @@ package com.ldnprod.converter
 
 class Category(public val name:String) {
 
-    var units = HashSet<CategoryUnit>()
+    var units = ArrayList<CategoryUnit>()
     fun addUnit(unit: CategoryUnit) {
         if (units.contains(unit)) {
             throw IllegalArgumentException("${unit.measurement} already exists in $name")

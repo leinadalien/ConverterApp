@@ -4,13 +4,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.InputStream
 
-class ButtonAdapter(private val stream: InputStream, private val dataViewModel: DataViewModel): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ButtonAdapter(private val stream: InputStream, private val dataViewModel: DataViewModel, private val lifecycleOwner: LifecycleOwner): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val INPUT_BUTTON_TYPE = 1
         const val FUN_BUTTON_TYPE = 2
@@ -53,6 +54,7 @@ class ButtonAdapter(private val stream: InputStream, private val dataViewModel: 
     override fun getItemCount() = buttons.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
         return if (viewType == FUN_BUTTON_TYPE){
             val layout = LayoutInflater.from(parent.context)
                 .inflate(R.layout.function_button, parent, false)
@@ -73,6 +75,7 @@ class ButtonAdapter(private val stream: InputStream, private val dataViewModel: 
     }
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = buttons[position]
+
         when(getItemViewType(position)){
             INPUT_BUTTON_TYPE -> {
                 with((holder as InputButtonHolder).button) {
@@ -85,10 +88,13 @@ class ButtonAdapter(private val stream: InputStream, private val dataViewModel: 
                     }
                     text = item.second
                     setOnClickListener {
-                        dataViewModel.textTo.value = item.second
+                        dataViewModel.passingInput.value = item.second
                         Log.i(LOG_TAG, "input ${item.second}")
                     }
-
+                    dataViewModel.blockedButtons.observe(lifecycleOwner) {
+                        buttons.contains(Pair("input", item.second))
+                        isEnabled = false
+                    }
                 }
             }
             else -> {
@@ -104,7 +110,12 @@ class ButtonAdapter(private val stream: InputStream, private val dataViewModel: 
                         "delete" -> setImageResource(android.R.drawable.ic_input_delete)
                     }
                     setOnClickListener {
+                        dataViewModel.passingFunction.value = item.second
                         Log.i(LOG_TAG, "clicked ${item.second}")
+                    }
+                    dataViewModel.blockedButtons.observe(lifecycleOwner) {
+                        buttons.contains(Pair("function", item.second))
+                        isEnabled = false
                     }
                 }
             }
