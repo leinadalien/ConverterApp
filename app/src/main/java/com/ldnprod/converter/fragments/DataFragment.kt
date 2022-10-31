@@ -22,6 +22,8 @@ import com.ldnprod.converter.databinding.DataFragmentBinding
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserFactory
 import java.text.DecimalFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DataFragment: Fragment(R.layout.data_fragment) {
     private val dataViewModel: DataViewModel by activityViewModels()
@@ -47,6 +49,7 @@ class DataFragment: Fragment(R.layout.data_fragment) {
         currentCategory = categories[0]
         firstUnit = currentCategory.units[0]
         secondUnit = currentCategory.units[0]
+
         val spinnerAdapter =
             ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, spinnerData)
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -66,7 +69,6 @@ class DataFragment: Fragment(R.layout.data_fragment) {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }
-
         binding.fromEditText.showSoftInputOnFocus = false
         binding.toEditText.showSoftInputOnFocus = false
         binding.fromEditText.onFocusChangeListener = OnFocusChangeListener { v, hasFocus -> focusChange(v, hasFocus)}
@@ -89,10 +91,13 @@ class DataFragment: Fragment(R.layout.data_fragment) {
     }
     private fun convert() {
         try{
-            var fromValue = focusedEditText!!.text.toString().toBigDecimal()
-            var toValue = currentCategory.convert(fromUnit!!, toUnit!!, fromValue)
-            unFocusedEditText!!.setText(DecimalFormat("#.##########").format(toValue))
+            Formatter.BigDecimalLayoutForm.SCIENTIFIC
+            val fromValue = focusedEditText!!.text.toString().toBigDecimal()
+            val toValue = currentCategory.convert(fromUnit!!, toUnit!!, fromValue)
+            unFocusedEditText!!.setText(toValue.toPlainString())
         } catch (e: NumberFormatException) {
+            unFocusedEditText!!.setText("")
+        } catch (e: IllegalArgumentException) {
             unFocusedEditText!!.setText("")
         }
     }
@@ -109,6 +114,8 @@ class DataFragment: Fragment(R.layout.data_fragment) {
                     if (start == 0 && end < it.text.length - 1 && (it.text[end + 1] == '.' || it.text[end + 1] == '0')) allIsGood = false
                     if (start == 0 && end != it.text.length && it.text.subSequence(start, end).contains('.')) allIsGood = false
                     if (start == 1 && it.text[0] == '0') allIsGood = false
+                } else {
+                    if (start == 0 && it.text[end - 1] == '0' && !it.text.subSequence(start, end - 1).contains('.')) allIsGood = false
                 }
                 if (allIsGood) it.text.replace(start, end, input)
 
@@ -143,6 +150,22 @@ class DataFragment: Fragment(R.layout.data_fragment) {
                 convert()
             }
         }
+        savedInstanceState?.let {
+            with(it) {
+                val catPos = getInt("category_spinner")
+                binding.spinner.setSelection(catPos)
+                currentCategory = categories[catPos]
+                val fromPos = getInt("from_spinner")
+                binding.fromSpinner.setSelection(fromPos)
+                firstUnit = currentCategory.units[fromPos]
+                val toPos = getInt("to_spinner")
+                binding.fromEditText.setText(getString("from_edittext"))
+                binding.toSpinner.setSelection(toPos)
+                secondUnit = currentCategory.units[toPos]
+                binding.toEditText.setText(getString("to_edittext"))
+            }
+        }
+        binding.swapButton.setOnClickListener { swapUnits() }
         binding.fromEditText.requestFocus()
     }
     private fun categoriesInit(){
@@ -188,7 +211,11 @@ class DataFragment: Fragment(R.layout.data_fragment) {
         setSpinnerData(binding.fromSpinner,  category.getMeasurements())
         setSpinnerData(binding.toSpinner,  category.getMeasurements())
         focusedEditText = binding.fromEditText
+        focusedEditText!!.text.clear()
+        unFocusedEditText!!.text.clear()
         binding.fromEditText.requestFocus()
+
+
     }
     private fun setSpinnerData(spinner: Spinner, data:List<String>){
         val spinnerAdapter = ArrayAdapter(requireActivity(), android.R.layout.simple_spinner_item, data)
@@ -214,6 +241,15 @@ class DataFragment: Fragment(R.layout.data_fragment) {
             }
         }
     }
+    private fun swapUnits(){
+        val toText = binding.toEditText.text.toString()
+        val fromId = binding.fromSpinner.selectedItemPosition
+        binding.fromSpinner.setSelection(binding.toSpinner.selectedItemPosition)
+        binding.toSpinner.setSelection(fromId)
+        binding.fromEditText.setText(toText)
+        binding.fromEditText.requestFocus()
+        convert()
+    }
     private fun updateUnits() {
         if (focusedEditText == binding.fromEditText) {
             fromUnit = firstUnit
@@ -221,6 +257,17 @@ class DataFragment: Fragment(R.layout.data_fragment) {
         } else {
             fromUnit = secondUnit
             toUnit = firstUnit
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        with(outState) {
+            putInt("category_spinner", binding.spinner.selectedItemPosition)
+            putInt("from_spinner", binding.fromSpinner.selectedItemPosition)
+            putString("from_edittext", binding.fromEditText.text.toString())
+            putInt("to_spinner", binding.toSpinner.selectedItemPosition)
+            putString("to_edittext", binding.toEditText.text.toString())
         }
     }
 }

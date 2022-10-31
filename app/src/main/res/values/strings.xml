@@ -3,4 +3,5 @@
     <string name="from_edit_text_hint">From</string>
     <string name="to_edit_text_hint">To</string>
     <string name="category_hint">Category</string>
+    <string name="swap_button_text">Swap</string>
 </resources>

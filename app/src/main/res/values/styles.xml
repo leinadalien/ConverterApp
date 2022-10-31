@@ -26,4 +26,13 @@
         <item name="android:padding">20dp</item>
         <item name="android:paddingEnd">20dp</item>
     </style>
+    <style name="Widget.Converter.SwapButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textSize">20sp</item>
+        <item name="android:height">60dp</item>
+        <item name="android:minWidth">60dp</item>
+        <item name="android:background">@drawable/swap_bg</item>
+        <item name="android:textColor">@color/num_button_foreground</item>
+        <item name="backgroundTint">@color/num_button_background</item>
+        <item name="android:inset">0dp</item>
+    </style>
 </resources>
