@@ -93,11 +93,13 @@ class DataFragment: Fragment(R.layout.data_fragment) {
     private fun convert() {
         try{
             Formatter.BigDecimalLayoutForm.SCIENTIFIC
+            focusedEditText!!.text.toString().toDouble()
             val fromValue = focusedEditText!!.text.toString().toBigDecimal()
             val toValue = currentCategory.convert(fromUnit!!, toUnit!!, fromValue)
             unFocusedEditText!!.setText(toValue.toPlainString())
         } catch (e: NumberFormatException) {
             unFocusedEditText!!.setText("")
+            invalidPasteToast.show()
         } catch (e: IllegalArgumentException) {
             unFocusedEditText!!.setText("")
         }
@@ -255,24 +257,23 @@ class DataFragment: Fragment(R.layout.data_fragment) {
     }
     private fun swapUnits(){
         val toText = binding.toEditText.text.toString()
-        val fromText = binding.fromEditText.text.toString()
         val fromId = binding.fromSpinner.selectedItemPosition
         binding.fromSpinner.setSelection(binding.toSpinner.selectedItemPosition)
         binding.toSpinner.setSelection(fromId)
-        binding.fromEditText.setText((toText))
-        binding.toEditText.setText((fromText))
+        binding.fromEditText.setText(cutZiros(toText))
+        convert()
         binding.fromEditText.requestFocus()
     }
-//    private fun cutZiros(text: String): String{
-//        var txt = text
-//        while (txt.isNotEmpty() && txt[txt.length - 1] == '0'){
-//            txt = txt.substring(0, txt.length - 1)
-//        }
-//        if (txt[txt.length - 1] == '.') {
-//            txt = txt.substring(0, txt.length - 1)
-//        }
-//        return txt
-//    }
+    private fun cutZiros(text: String): String{
+        var txt = text
+        while (txt.isNotEmpty() && txt[txt.length - 1] == '0'){
+            txt = txt.substring(0, txt.length - 1)
+        }
+        if (txt[txt.length - 1] == '.') {
+            txt = txt.substring(0, txt.length - 1)
+        }
+        return txt
+    }
     private fun updateUnits() {
         if (focusedEditText == binding.fromEditText) {
             fromUnit = firstUnit
